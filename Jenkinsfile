@@ -18,6 +18,14 @@ pipeline {
                 }
             }
         }
+        stage('Latest AMI') {
+            steps {
+                script {
+                    SOURCE_AMI = sh(returnStdout: true, script:"aws ssm get-parameters --names /aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2 --region ${AWS_DEFAULT_REGION} | jq '.Parameters[0].Value'").trim()
+                    sh "echo ${SOURCE_AMI}"
+                }
+            }
+        }
         stage ('Packer Build') {
             steps {
                 script {
