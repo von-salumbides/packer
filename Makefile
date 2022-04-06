@@ -1,9 +1,10 @@
 .PHONY: build
 
 build:
-	packer build template/$(AMI_TYPE)/ \
+	packer build \
 	-var "ami_prefix=$(AMI_NAME)" \
-	-var "ami_type=$(AMI_TYPE)"
+	-var "ami_type=$(AMI_TYPE)" \
+	template/$(AMI_TYPE)/ \
 	
 validate:
 	packer validate template/$(AMI_TYPE)/
