@@ -4,9 +4,40 @@
   become: true
   connection: local
   tasks: 
-  - name: Install the latest version of Apache
-    yum:
-      name: httpd
-      state: latest
+  - name: 1.0. - Install Epel
+    shell: amazon-linux-extras install epel -y && \
+            yum-config-manager --enable epel && \
+            amazon-linux-extras install php7.4 -y
+  - name: 1.0 -- Install Dependencies
+    yum: name={{ item }} state=present update_cache=yes
+    loop:
+      - nfs-utils
+      - git
+      - curl
+      - zip
+      - unzip
+      - httpd
+      - redis
+      - mlocate
+      - php-common
+      - mod_ssl
+      - mod_perl
+      - php-xml
+      - php-soap
+      - php-xmlrpc
+      - php-mbstring
+      - php-json
+      - php-gd
+      - php-opcache
+      - php-mysqlnd
+      - php-mysqli
+      - php-devel
+      - php-pecl-memcache
+      - php-pspell
+      - php-snmp
+      - php-zip
+      - php-pecl-zip
+      - php-pecl-redis
+      
   - name: enable httpd
     service: name=httpd enabled=yes state=started
