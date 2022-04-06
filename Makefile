@@ -1,4 +1,7 @@
-.PHONY: build
+.PHONY: init build
+
+init:
+	packer init template/$(AMI_TYPE)/
 
 build:
 	packer build \
