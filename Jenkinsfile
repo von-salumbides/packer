@@ -30,6 +30,7 @@ pipeline {
             steps {
                 script {
                     println('Building AMI')
+                    sh "make"
                 }
             }
         }

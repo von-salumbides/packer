@@ -1,0 +1,12 @@
+---
+- name: Install Centos Dependency
+  hosts: 127.0.0.1
+  connection: local
+  tasks: 
+  - name: Install the latest version of Apache
+    yum:
+      name: httpd
+      state: latest
+  - name: enable httpd
+    service: name=httpd enabled=yes state=started
+  

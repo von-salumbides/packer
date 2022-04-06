@@ -1,0 +1,48 @@
+{
+    "variables" :{
+        "application_name" : "{{ env `APPLICATION_NAME` }}",
+        "aws_account_id" : "{{ env `AWS_ACCOUNT_ID` }}",
+        "aws_profile" : "{{ env `AWS_PROFILE` }}",
+        "environment" : "{{ env `AWS_ENVIRONMENT` }}",
+        "security_group_id" : "{{ env `SECURITY_GROUP_ID` }}",
+        "subnet_id" : "{{ env `SUBNET_ID` }}",
+        "source_ami" : null,
+        "ami_name" : null
+    },
+    "builders" : [{
+        "type" : "amazon-ebs",
+        "profile" : "{{ env `aws_profile` }}",
+        "region" : "us-east-2",
+        "source_ami" : "{{ env `source_ami` }}",
+        "instance_type" : "t3.small",
+        "availability_zone" : "us-east-2a",
+        "security_group_id" : "{{ env `security_group_id` }}",
+        "ssh_timeout" : "600s",
+        "subnet_id" : "{{ env `subnet_id` }}",
+        "ssh_username" : "ec2-user",
+        "ami_name" : "{{ env `application_name` }}-{{ user `ami_name` }}-{{timestamp}}",
+        "ami_users" : "{{ env `aws_account_id` }}",
+        "ami_regions" : "us-east-2",
+        "launch_block_device_mappings" : [
+            {
+                "device_name": "/dev/sda1",
+                "volume_size" : 10,
+                "volume_type" : "gp3",
+                "delete_on_termination" : true
+            }
+        ],
+        "tags" : {
+            "Name" : "{{ env `application_name` }}-{{ user `ami_name` }}-{{timestamp}}",
+            "OWNER" : "DEVOPS"
+        }
+    }],
+    "provisioner" : [{
+        "type": "shell",
+            "scripts": [
+                "packages.sh",
+                "installers.sh",
+                "certs.sh"
+            ],
+        "pause_before": "30s"
+    }]
+}
