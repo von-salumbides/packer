@@ -8,7 +8,7 @@
     shell: amazon-linux-extras install epel -y && \
             yum-config-manager --enable epel && \
             amazon-linux-extras install php7.4 -y
-  - name: 1.0 -- Ensure Dependencies are installed
+  - name: 1.1 -- Ensure Dependencies are installed
     yum: name={{ item }} state=present update_cache=yes
     loop:
       - nfs-utils
@@ -38,7 +38,8 @@
       - php-zip
       - php-pecl-zip
       - php-pecl-redis
-  - name: Install main configuration file
+
+  - name: 1.2 - Install main configuration file
     template:
       src: config/httpd.conf.j2
       dest: "/etc/httpd/conf/httpd.conf"
@@ -47,5 +48,5 @@
       setype: httpd_config_t
       mode: '0644'
 
-  - name: enable httpd
+  - name: 1.3 - Enable Httpd
     service: name=httpd enabled=yes state=started

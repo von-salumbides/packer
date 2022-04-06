@@ -37,8 +37,13 @@ build {
         pause_before = "10s"
         timeout      = "10s"
     }
+  provisioner "file" {
+        source = "template"
+        destination = "/tmp/"
+    }
   provisioner "ansible-local" {
     playbook_file   = "template/${var.ami_type}/playbook.yml"
+    playbook_dir = "template/${var.ami_type}"
     # extra_arguments = [
     #     "--extra-vars", "\"php_version=${var.php_version}\""
     # ]
