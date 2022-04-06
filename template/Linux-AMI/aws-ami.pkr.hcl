@@ -38,7 +38,7 @@ build {
         timeout      = "10s"
     }
   provisioner "ansible-local" {
-    playbook_file   = "./playbook.yml"
+    playbook_file   = "template/${var.ami_type}/playbook.yml"
     # extra_arguments = [
     #     "--extra-vars", "\"php_version=${var.php_version}\""
     # ]
