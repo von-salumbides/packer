@@ -9,9 +9,4 @@ build:
 	-var "ami_prefix=$(AMI_NAME)" \
 	-var "ami_type=$(AMI_TYPE)" \
 	-var "ami_account_id=$(AWS_ACCOUNT_ID)" \
-	template/$(AMI_TYPE)/ \
-	
-
-
-
-
+	template/$(AMI_TYPE)/ 
