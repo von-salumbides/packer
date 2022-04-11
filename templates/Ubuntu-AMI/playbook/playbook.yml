@@ -1,0 +1,8 @@
+---
+- name: Install Centos Dependency
+  hosts: localhost
+  become: true
+  connection: local
+  tasks: 
+  - name: TEST
+    shell: echo "hello"
